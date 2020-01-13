@@ -4,6 +4,17 @@
 </head>
 <body>
 {% include 'header.html' %}
-<h1>Datos Cargados en el Sistema de Recomendacion</h1>
+<h1>Buscar por género</h1>
+<form id="formulario" method="post">{% csrf_token %}
+    <input type="text" name="genero" placeholder="Género"/>
+    <input type="submit" value="Realizar búsqueda"/>
+</form>
+
+{% if animes %}
+<ul>{% for anime in animes %}
+    <li>{{anime.titulo}} - {{anime.formato_emision}} - {{anime.generos}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 </body>
 </html>

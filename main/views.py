@@ -1,10 +1,7 @@
-# import shelve
-# from main.models import 
-# from main.forms import UserForm, FilmForm
+from main.models import Anime, Puntuacion
 from django.shortcuts import render, get_object_or_404
-# from main.recommendations import  transformPrefs, calculateSimilarItems, getRecommendations, getRecommendedItems, topMatches
 from main.populate import populateDatabase
-from main.forms import animeGenreForm
+from main.forms import animeGenreForm, animeForm
     
 #  CONJUNTO DE VISTAS
 
@@ -19,13 +16,14 @@ def populateDB(request):
 def animes_genero(request):
     formulario = animeGenreForm()
     animes = None
-
     if request.method == 'POST':
         formulario = animeGenreForm(request.POST)
+        print(formulario.is_valid())
         if formulario.is_valid():
+            print(1)
             animes = Anime.objects.filter(generos__icontains=formulario.cleaned_data['genero'])
-
-    return render(request, 'animes_genero.html', {'formulario',formulario, 'animes':animes})
+            
+    return render(request, 'animes_genero.html', {'formulario':formulario, 'animes':animes})
 
 # APARTADO B
 def mejores_animes(request):
@@ -54,3 +52,6 @@ def similar_anime(request):
             return render(request,'similarFilms.html', {'film': film,'films': items})
     form = FilmForm()
     return render(request,'search_film.html', {'form': form})
+
+def recomendar(request):
+    return None
