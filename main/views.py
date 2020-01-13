@@ -30,10 +30,19 @@ def animes_genero(request):
 
 # APARTADO B
 def mejores_animes(request):
-    puntuacion = Puntuacion.objects.filter(puntuacion=10)
-    animes = Anime.objects.annotate(notas=Sum(puntuacion)).order_by('-notas')[:2]
-    return render(request,'mejores_animes.html', {'animes':animes})
-
+    cuenta = [0,0]
+    lista = [0,0]
+    animes = Anime.objects.all()
+    for a in animes:
+        puntuacion = Puntuacion.objects.filter(puntuacion=10).filter(id_anime = a).count()
+        if (puntuacion > cuenta[1]):
+            cuenta[1] = puntuacion
+            lista[1] = a
+        elif (puntuacion > cuenta[0]):
+            cuenta[0] = puntuacion
+            lista[0] = a
+            cuenta.sort(reverse=True)
+    return render(request,'mejores_animes.html', {'lista':lista})
 
 def recomendar(request):
     return None
