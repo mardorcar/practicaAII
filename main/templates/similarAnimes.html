@@ -1,0 +1,16 @@
+<html>
+<head>
+<title>Sistema de Recomendacion</title>
+</head>
+<body>
+{% include 'header.html' %}
+<section>
+<h1>El anime que mas se parece a {{anime.titulo}} es:</h1>
+<l>
+{% for f, s in animes %}
+<li>Title: {{f.titulo}}   Similarity: {{s | floatformat:"2"}}</li>
+{% endfor %}
+</l>
+</section>
+</body>
+</html>
