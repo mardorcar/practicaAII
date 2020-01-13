@@ -2,42 +2,19 @@ from django.db import models
 from django.core.validators import MinValueValidator,MaxValueValidator,URLValidator
 
 
-class Occupation(models.Model):
-    occupationName = models.CharField(max_length=30)
+class Anime(models.Model):
+    id_anime = models.TextField(primary_key=True)
+    titulo = models.CharField(max_length=100)
+    generos = models.CharField(max_length=50)
+    formato_emision = models.CharField(max_length=50)
+    numero_episodios = models.IntegerField()
     def __str__(self):
-        return self.occupationName
- 
-    
-class Genre(models.Model):
-    genreName = models.CharField(max_length=20) 
-    def __str__(self):
-        return self.genreName   
-    
-      
-class UserInformation(models.Model):
-    age = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
-    gender = models.CharField(max_length=1, choices=(('F', 'Female'),('M','Male'),))
-    occupation = models.ForeignKey(Occupation, on_delete=models.DO_NOTHING)
-    zipCode = models.CharField(max_length=8)
-    def __str__(self):
-        return self.gender+" "+self.zipCode
-  
-    
-class Film(models.Model):
-    movieTitle = models.CharField(max_length=100)
-    releaseDate = models.DateField(null=True, blank=True)
-    releaseVideoDate = models.DateField(null=True, blank=True)
-    IMDbURL = models.URLField(validators=[URLValidator()])
-    genres = models.ManyToManyField(Genre)
-    ratings = models.ManyToManyField(UserInformation, through="Rating")
-    def __str__(self):
-        return self.movieTitle
+        return self.titulo  
 
     
-class Rating(models.Model):
-    user = models.ForeignKey(UserInformation, on_delete=models.CASCADE)
-    film = models.ForeignKey(Film, on_delete=models.CASCADE)
-    rateDate = models.DateField(null=True, blank=True)
-    rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+class Puntuacion(models.Model):
+    id_usuario = models.TextField(primary_key=True)
+    id_anime = models.ForeignKey(Anime, on_delete=models.CASCADE)
+    puntuacion = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     def __str__(self):
-        return str(self.rating)
+        return str(self.puntuacion)
