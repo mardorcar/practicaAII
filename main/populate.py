@@ -13,11 +13,11 @@ def populateAnime():
         
     lista=[]
     fileobj=open(path+"/anime.csv", "r",encoding= 'ISO-8859-1')
-    for line in fileobj.readlines():
+    for line in fileobj.readlines()[1:]:
         rip = line.split(';')
         if len(rip) != 5:
             continue
-        lista.append(Anime(id_anime=int(rip[0].strip()), titulo=rip[1].strip()), generos = rip[2].strip(), formato_emision= rip[3].strip(), numero_episodios=int(rip[4].strip()))
+        lista.append(Anime(id_anime=int(rip[0].strip()), titulo=rip[1].strip(), generos = rip[2].strip(), formato_emision= rip[3].strip(), numero_episodios=rip[4].strip()))
     fileobj.close()
     Anime.objects.bulk_create(lista)  # bulk_create hace la carga masiva para acelerar el proceso
     
@@ -30,12 +30,15 @@ def populatePuntuacion():
     print("Loading Ratings...")
         
     lista=[]
-    fileobj=open(path+"/ratings.cvs", "r",encoding= 'ISO-8859-1')
-    for line in fileobj.readlines():
+    fileobj=open(path+"/ratings.csv", "r",encoding= 'ISO-8859-1')
+    for line in fileobj.readlines()[1:]:
         rip = line.split(';')
         if len(rip) != 3:
             continue
-        lista.append(Puntuacion(id_usuario=int(rip[0].strip()), id_anime=Anime.objects.get(rip[1].strip()), puntuacion= int(rip[2].strip())))
+        try:
+            lista.append(Puntuacion(id_usuario=int(rip[0].strip()), id_anime=Anime.objects.get(id_anime=rip[1].strip()), puntuacion= int(rip[2].strip())))
+        except:
+            continue
     fileobj.close()
     Puntuacion.objects.bulk_create(lista)
     
@@ -51,5 +54,6 @@ def populateDatabase():
     populatePuntuacion()
     print("Finished database population")
     
+
 if __name__ == '__main__':
     populateDatabase()
