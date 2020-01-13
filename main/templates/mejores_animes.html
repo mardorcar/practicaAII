@@ -1,0 +1,16 @@
+<html>
+<head>
+<title>Sistema de Recomendacion - Movielens</title>
+</head>
+<body>
+{% include 'header.html' %}
+<section>
+<h1>Top 2 animes con notas de 10</h1>
+{% for anime in animes %}
+<ol>Anime ID: {{anime.id_anime}} - Título: {{anime.titulo}} - Número de 10: {{anime.puntuaciones}} </ol>
+{% empty %}
+<h2> No hay animes con un 10 </h2>
+{% endfor %}
+</section>
+</body>
+</html>

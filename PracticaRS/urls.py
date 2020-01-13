@@ -7,11 +7,8 @@ from main import views
 urlpatterns = [
     path('', views.index),
     path('populate/', views.populateDB),
-    path('loadRS', views.loadRS),
-    path('recommendedFilmsItems', views.recommendedFilmsItems),
-    path('recommendedFilmsUser', views.recommendedFilmsUser),
-    path('similarFilms', views.similarFilms),
-    path('recommendedUsersFilms', views.recommendedUsersFilms),
-    path('search', views.search),
-    path('admin/', admin.site.urls),
+    path('animes_genero', views.animes_genero),
+    path('mejores_animes/', views.mejores_animes),
+    path('similar_anime', views.similar_anime),
+    path('recomendar', views.recomendar),
 ]

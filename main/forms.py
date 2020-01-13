@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 from django import forms
 
-class UserForm(forms.Form):
-    id = forms.CharField(label='User ID')
+class animeGenreForm(forms.Form):
+    genero = forms.CharField(label='Género del anime')
     
-class FilmForm(forms.Form):
-    id = forms.CharField(label='Movie ID')
+class animeForm(forms.Form):
+    id = forms.CharField(label='ID del anime')
